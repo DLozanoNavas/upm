@@ -27,8 +27,8 @@
 #include <sys/time.h>
 
 #include <mraa/gpio.hpp>
-
 #include <mraa/aio.hpp>
+#include <mraa/initio.hpp>
 
 #define AD8232_DEFAULT_AREF  3.3
 
@@ -57,7 +57,7 @@ namespace upm {
    * the intent to send that data, via serial or network port, somewhere to
    * another piece of software running on a computer that plots the data for
    * you, like an EKG.
-   * 
+   *
    * Processing (https://www.processing.org/) is software
    * that should work, using information from the SparkFun* website.
    *
@@ -65,8 +65,8 @@ namespace upm {
    *
    * @image html ad8232.jpg
    * <br><em>AD8232 Heart Rate Monitor image provided by SparkFun under
-   * <a href=https://creativecommons.org/licenses/by-nc-sa/3.0/>
-   * CC BY-NC-SA-3.0</a>.</em>
+   * <a href=https://creativecommons.org/licenses/by/2.0/>
+   * CC BY 2.0</a>.</em>
    *
    * @snippet ad8232.cxx Interesting
    */
@@ -85,6 +85,13 @@ namespace upm {
     AD8232(int loPlus, int loMinus, int output, float aref=AD8232_DEFAULT_AREF);
 
     /**
+     * Instantiates AD8232 sensor object based on a given string.
+     *
+     * @param initStr string containing specific information for AD8232 sensor initialization.
+     */
+    AD8232(std::string initStr);
+
+    /**
      * AD8232 destructor
      */
     ~AD8232();
@@ -101,10 +108,10 @@ namespace upm {
     mraa::Gpio m_gpioLOPlus;
     mraa::Gpio m_gpioLOMinus;
     mraa::Aio m_aioOUT;
+    mraa::MraaIo mraaIo;
 
     float m_aref;
     int m_ares;
-
   };
 }
 

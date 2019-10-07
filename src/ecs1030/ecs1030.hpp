@@ -24,9 +24,11 @@
 #pragma once
 
 #include <string>
+#include <vector>
 #include <math.h>
 #include <mraa/aio.h>
 #include <mraa/gpio.h>
+#include <mraa/initio.hpp>
 
 namespace upm {
 
@@ -67,8 +69,8 @@ namespace upm {
    *
    * @image html ecs1030.jpg
    * <br><em>ECS1030 Sensor image provided by SparkFun* under
-   * <a href=https://creativecommons.org/licenses/by-nc-sa/3.0/>
-   * CC BY-NC-SA-3.0</a>.</em>
+   * <a href=https://creativecommons.org/licenses/by/2.0/>
+   * CC BY 2.0</a>.</em>
    *
    * @snippet ecs1030.cxx Interesting
    */
@@ -84,6 +86,13 @@ class ECS1030 {
          * @param pinNumber Number of the data pin
          */
         ECS1030 (int pinNumber);
+
+        /**
+         * Instantiates ECS1030 sensor object based on a given string.
+         *
+         * @param initStr string containing specific information for ECS1030 sensor initialization.
+         */
+        ECS1030 (std::string initStr);
 
         /**
          * ECS1030 object destructor; basically, it closes the GPIO.
@@ -119,6 +128,7 @@ class ECS1030 {
     private:
         std::string         m_name;
         mraa_aio_context    m_dataPinCtx;
+        mraa::MraaIo        mraaIo;
 
         double              m_calibration;
         int                 m_lastSample;

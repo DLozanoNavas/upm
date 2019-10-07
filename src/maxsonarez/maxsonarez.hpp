@@ -26,6 +26,7 @@
 #include <iostream>
 #include <string>
 #include <mraa/aio.h>
+#include <interfaces/iDistance.hpp>
 
 // EZ series is volts/512
 #define MAXSONAREZ_RES  512
@@ -61,13 +62,13 @@ namespace upm {
    *
    * @image html maxsonarez.jpg
    * <br><em>LV-MaxSonar-EZ Ultrasonic Ranger image provided by SparkFun* under
-   * <a href=https://creativecommons.org/licenses/by-nc-sa/3.0/>
-   * CC BY-NC-SA-3.0</a>.</em>
+   * <a href=https://creativecommons.org/licenses/by/2.0/>
+   * CC BY 2.0</a>.</em>
    *
    * @snippet maxsonarez.cxx Interesting
    */
 
-  class MAXSONAREZ {
+  class MAXSONAREZ : virtual public iDistance {
   public:
 
     /**
@@ -89,6 +90,13 @@ namespace upm {
      * @return Distance to the object in inches
      */
     int inches();
+
+    /**
+     * Gets the distance to the object in cm
+     *
+     * @return Distance to the object in cm
+     */
+    virtual float getDistance();
 
   private:
     mraa_aio_context m_aio;
